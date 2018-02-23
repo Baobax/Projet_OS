@@ -6,21 +6,32 @@ t_bool	ActionECHO (parse_info *info, int debut, int nbArg) {
 
   int i;
   FILE *sortie;
-  /* si l'appel est correctement ecrit, on a :
-   * arguments[0] == "echo"
-   * arguments[1..nbArg-1] = "..."
-   *
-   * Pas de lecture, mais une ecriture redirigee possible
-   */
+  if (! EST_EGAL(info->sortie, ""))
+  {
+    sortie=fopen(info->sortie,"w");
+    if (sortie==NULL)
+    {
+      /* Traitement du cas où le fichier n’est pas accessible en écriture */
+    }
+  }
+  else {
+    sortie=stdout;
+  }
 
-  sortie=stdout;
 
   i = 1;
   while(i<nbArg)	{
     fprintf(sortie, "%s ", info->ligne_cmd[debut+i]);
     i++;
   }
-  printf("\n");
+
+  if (! EST_EGAL(info->sortie, ""))
+  {
+    fclose(sortie);
+  }
+  else {
+    printf("\n");
+  }
 
   return vrai;
 }
@@ -104,17 +115,23 @@ t_bool	ActionLS (parse_info *info, int debut, int nbArg) {
   (void) debut;
   (void) nbArg;
 
-  if (nbArg == 2 ){
+
+  if (nbArg == 2){
 
     struct dirent *lecture;
     DIR *repertoire;
     repertoire = opendir(info->ligne_cmd[1]);
-    while ((lecture = readdir(repertoire))) {
+    //Ce test pour éviter que si on tape par exemple ls -al cela fasse une erreur de segmentation
+    if(repertoire != NULL) {
+      while ((lecture = readdir(repertoire))) {
         printf("%s\n", lecture->d_name);
+      }
+      closedir(repertoire);
     }
-    closedir(repertoire);
+    else {
+      ActionEXEC(info, debut, nbArg);
+    }
   }
-
   else{
     ActionEXEC(info, debut, nbArg);
   }

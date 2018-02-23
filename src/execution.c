@@ -31,17 +31,17 @@ void execution_ligne_cmd(parse_info *info) {
        */
 
       switch(info->modificateur[j]) {
-      case REDIRECTION_ENTREE:
-	strcpy(info->entree, info->ligne_cmd[j]);
-	break;
-      case REDIRECTION_SORTIE:
-	strcpy(info->sortie, info->ligne_cmd[j]);
-	break;
-      case ARRIERE_PLAN:
-	info->modificateur[i]=ARRIERE_PLAN;
-	break;
-      default:
-	nb_arg++;
+        case REDIRECTION_ENTREE:
+        strcpy(info->entree, info->ligne_cmd[j]);
+        break;
+        case REDIRECTION_SORTIE:
+        strcpy(info->sortie, info->ligne_cmd[j]);
+        break;
+        case ARRIERE_PLAN:
+        info->modificateur[i]=ARRIERE_PLAN;
+        break;
+        default:
+        nb_arg++;
       }
 
       j++;
@@ -72,37 +72,37 @@ void execution_ligne_cmd(parse_info *info) {
 
     /* traitement post-execution de la partie concernant inf->modificateur[j] != RIEN */
     switch(info->modificateur[j]) {
-    case EXECUTION:
+      case EXECUTION:
       break;
 
-    case EXECUTION_SI:
+      case EXECUTION_SI:
       /* la/les commande suivante va �tre directement traitee ici :
        * i.e. ne sera pas executee
        */
       if(!resultat) {/* si on doit passer a la commande suivante... */
-	while (j<info->nb_arg && \
-	       (info->modificateur[j]!=EXECUTION && \
-		info->modificateur[j]!=EXECUTION_SINON)) {
-	  j++;
-	}
-      }
-      break;
-    case EXECUTION_SINON:
+      while (j<info->nb_arg && \
+        (info->modificateur[j]!=EXECUTION && \
+          info->modificateur[j]!=EXECUTION_SINON)) {
+       j++;
+   }
+ }
+ break;
+ case EXECUTION_SINON:
       /* la/les commande suivante va �tre directement traitee ici :
        * i.e. ne sera pas executee
        */
       if (resultat) { /* si on doit passer a la commande suivante... */
 
-      }
-      break;
-    default :
+}
+break;
+default :
       /* cas impossible a priori */
-      break;
-    }
+break;
+}
 
     info->modificateur[j] = AUTRE; /* il suffit d'executer la commande suivante en sequence */
-    i = j;
-  }
+i = j;
+}
 }
 
 t_bool execution_cmd(parse_info *info, int debut, int nb_arg)
