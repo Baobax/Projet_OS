@@ -12,6 +12,8 @@ t_bool	ActionECHO (parse_info *info, int debut, int nbArg) {
     if (sortie==NULL)
     {
       /* Traitement du cas où le fichier n’est pas accessible en écriture */
+      printf("Impossible d'accéder en écriture\n");
+      return faux;
     }
   }
   else {

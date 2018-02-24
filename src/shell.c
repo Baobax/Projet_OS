@@ -45,13 +45,12 @@ int main (int argc, char *argv[]) {
       execution_ligne_cmd(info);
 
       if (mode_interactif) {
+       AfficheInvite ();
+     }
+   }
 
-	AfficheInvite ();
-      }
-    }
+   mode_interactif = faux;
+ }
 
-    mode_interactif = faux;
-  }
-
-  return EXIT_SUCCESS;
+ return EXIT_SUCCESS;
 }
