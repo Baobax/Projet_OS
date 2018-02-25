@@ -37,6 +37,8 @@ int main (int argc, char *argv[]) {
        * dans la boucle suivante
        */
       (void) argv;
+
+      entree = fopen(argv[i], "r");
     }
 
 
