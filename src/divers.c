@@ -82,7 +82,7 @@ t_bool ecrire_variable (char* nomVar, char* valeur) { //setenv
 
 t_bool lire_variable (char* nomVar, char* valeur, int taille) { //getenv
 
-    strcpy(valeur, "");
+  strcpy(valeur, "");
 
   // printf("Appel a lire_variable (%s %d) a ecrire avec \"%s\", \"%s\" et %d. \n",
   // __FILE__,

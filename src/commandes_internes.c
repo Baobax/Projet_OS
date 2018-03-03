@@ -3,14 +3,13 @@
 #include "commandes_externes.h"
 
 t_bool	ActionECHO (parse_info *info, int debut, int nbArg) {
-
   int i;
   FILE *sortie;
-  if (! EST_EGAL(info->sortie, ""))
-  {
+
+  if (! EST_EGAL(info->sortie, "")) {
+    
     sortie=fopen(info->sortie,"w");
-    if (sortie==NULL)
-    {
+    if (sortie==NULL) {
       /* Traitement du cas où le fichier n’est pas accessible en écriture */
       printf("Impossible d'accéder en écriture\n");
       return faux;
@@ -27,8 +26,7 @@ t_bool	ActionECHO (parse_info *info, int debut, int nbArg) {
     i++;
   }
 
-  if (! EST_EGAL(info->sortie, ""))
-  {
+  if (! EST_EGAL(info->sortie, "")) {
     fclose(sortie);
   }
   else {
@@ -112,29 +110,33 @@ t_bool ActionCD (parse_info *info, int debut, int nbArg) {
 
 t_bool	ActionLS (parse_info *info, int debut, int nbArg) {
 
-  /* Utilisation des parametres */
-  (void) info;
-  (void) debut;
-  (void) nbArg;
-
-
-  if (nbArg == 2){
-
+  if(nbArg == 1) {
     struct dirent *lecture;
     DIR *repertoire;
-    repertoire = opendir(info->ligne_cmd[1]);
-    //Ce test pour éviter que si on tape par exemple ls -al cela fasse une erreur de segmentation
+    repertoire = opendir(".");
     if(repertoire != NULL) {
       while ((lecture = readdir(repertoire))) {
         printf("%s\n", lecture->d_name);
       }
       closedir(repertoire);
     }
+  }
+  else if (nbArg == 2){
+    struct dirent *lecture;
+    DIR *repertoire;
+    repertoire = opendir(info->ligne_cmd[debut + 1]);
+    if(repertoire != NULL) {
+      while ((lecture = readdir(repertoire))) {
+        printf("%s\n", lecture->d_name);
+      }
+      closedir(repertoire);
+    }
+    //Si on n'a pas pu ouvrir le répertoire, alors le deuxième argument est peut être autre chose qu'un chemin
     else {
       ActionEXEC(info, debut, nbArg);
     }
   }
-  else{
+  else {
     ActionEXEC(info, debut, nbArg);
   }
 

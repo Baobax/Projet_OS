@@ -6,7 +6,7 @@
 #include <sys/wait.h>
 
 //Pour pouvoir utiliser la fonction open
-//Il est requis d'utiliser la fonction open pour utiliser dup2
+//Car il est requis d'utiliser la fonction open pour utiliser dup2
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
