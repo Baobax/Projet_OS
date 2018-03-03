@@ -52,11 +52,18 @@ t_bool	ActionEXEC (parse_info *info, int debut, int nbArg) {
 	}
 	else if (pid_fils != 0) {
 		if(premierPlan) {
-			wait(NULL);
+			//Pourquoi waitpid ?
+			//Si on fait seulement wait et qu'on exécute "& gedit", qu'on le ferme et qu'on fait ensuite "gedit"
+			//la deuxième exécution se fait aussi en arrière plan car le wait récupère
+			//le code de retour du gedit précédent
+			//Il faut donc attendre le processus fils qu'on vient de créer
+			waitpid(pid_fils, NULL, 0);
 		}
 	}
 	else {
 		execvp(info->ligne_cmd[debut], ligne);
+		printf("Erreur exec\n");
+		exit(1);
 	}
 
 

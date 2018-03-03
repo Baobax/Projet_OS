@@ -11,7 +11,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-
 t_bool ActionEXEC (parse_info *info, int debut, int nbArg);
 
 #endif

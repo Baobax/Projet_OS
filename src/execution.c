@@ -134,31 +134,30 @@ t_bool execution_cmd(parse_info *info, int debut, int nb_arg)
 
 //Commande pour tester les tubes : "ls | sort"
 t_bool execution_cmd_tube(parse_info *info, int debut, int nb_args_cmd_1, int nb_args_total) {
-  //char *ligne_cmd1[ARG_MAX], *ligne_cmd2[ARG_MAX];
-  pid_t pid_fils1;
+  pid_t pid_fils;
   int tuyaux[2];
   pipe(tuyaux);
   int sortieStandard = dup(1);
   int entreeStandard = dup(0);
 
-  pid_fils1 = fork();
+  pid_fils = fork();
 
-  if(pid_fils1 == -1) {
+  if(pid_fils == -1) {
     printf("erreur dans le fork %d\n", errno);
   }
-  else if(pid_fils1 != 0) {
+  else if(pid_fils != 0) {
     close(tuyaux[1]);
-      //Redirection de l'entrée standard dans le tuyau pour
-      //que la commande ait le résultat de l'autre commande en entrée
+    //Redirection de l'entrée standard dans le tuyau pour
+    //que la commande ait le résultat de l'autre commande en entrée
     dup2(tuyaux[0], 0);
 
     execution_cmd(info, nb_args_cmd_1, nb_args_total - nb_args_cmd_1);
-    wait(NULL);
+    waitpid(pid_fils, NULL, 0);
   }
   else {
     close(tuyaux[0]);
     //Redirection de la sortie standard dans le tuyau
-    //pour que l'autre processus reçoive le résultat de l'exécution
+    //pour envoyer le résultat de l'exécution à l'autre processus
     dup2(tuyaux[1], 1);
     execution_cmd(info, debut, nb_args_cmd_1);
     exit(1);
