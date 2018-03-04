@@ -62,7 +62,7 @@ t_bool	ActionEXEC (parse_info *info, int debut, int nbArg) {
 	}
 	else {
 		execvp(info->ligne_cmd[debut], ligne);
-		printf("Erreur exec\n");
+		printf("Cette commande n'existe pas.\n");
 		exit(1);
 	}
 

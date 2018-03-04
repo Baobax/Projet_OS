@@ -1,1 +1,2 @@
-12 
+set var = 13
+ls -al
