@@ -79,5 +79,5 @@ t_bool	ActionEXEC (parse_info *info, int debut, int nbArg) {
 		close(entree);
 	}
 
-	return faux;
+	return vrai;
 }

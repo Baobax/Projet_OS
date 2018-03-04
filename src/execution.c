@@ -72,27 +72,27 @@ void execution_ligne_cmd(parse_info *info) {
       case EXECUTION:
       break;
       case EXECUTION_SI:
-      /* la/les commande suivante va �tre directement traitee ici :
-       * i.e. ne sera pas executee
-       */
+        /* la/les commande suivante va etre directement traitee ici :
+         * i.e. ne sera pas executee
+         */
         if(!resultat) {/* si on doit passer a la commande suivante... */
-      while (j<info->nb_arg && \
-        (info->modificateur[j]!=EXECUTION && \
-          info->modificateur[j]!=EXECUTION_SINON)) {
-        j++;
-    }
-  }
-  break;
-  case EXECUTION_SINON:
-      /* la/les commande suivante va �tre directement traitee ici :
-       * i.e. ne sera pas executee
-       */
-      if (resultat) { /* si on doit passer a la commande suivante... */
-        j++;//S'il y a resultat, alors il ne faut pas exécuter le SINON, on passe à la commande suivante
-      }
+          while (j<info->nb_arg && \
+            (info->modificateur[j]!=EXECUTION && \
+              info->modificateur[j]!=EXECUTION_SINON)) {
+            j++;
+          }
+        }
+      break;
+      case EXECUTION_SINON:
+        /* la/les commande suivante va etre directement traitee ici :
+         * i.e. ne sera pas executee
+         */
+        if (resultat) { /* si on doit passer a la commande suivante... */
+          j++; //S'il y a resultat, alors il ne faut pas exécuter le SINON : on passe à la commande suivante
+        }
       break;
       default :
-      /* cas impossible a priori */
+        /* cas impossible a priori */
       break;
     }
 
@@ -125,7 +125,7 @@ t_bool execution_cmd(parse_info *info, int debut, int nb_arg)
 }
 
 //Commande utile pour tester les tubes : "ls | sort"
-t_bool execution_cmd_tube(parse_info *info, int debut, int nb_args_cmd_1, int nb_args_total) {
+void execution_cmd_tube(parse_info *info, int debut, int nb_args_cmd_1, int nb_args_total) {
   pid_t pid_fils;
   int tuyaux[2];
   pipe(tuyaux);
@@ -158,6 +158,4 @@ t_bool execution_cmd_tube(parse_info *info, int debut, int nb_args_cmd_1, int nb
 
   dup2(sortieStandard, 1);
   dup2(entreeStandard, 0);
-
-  return faux;
 }

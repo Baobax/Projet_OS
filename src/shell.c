@@ -9,7 +9,6 @@
 
 
 int main (int argc, char *argv[]) {
-
   char ligne_cmd[CHAINE_MAX];
   char verOS[CHAINE_MAX];
   FILE* entree;
@@ -25,17 +24,16 @@ int main (int argc, char *argv[]) {
   }
 
   for(i=1; i<argc || mode_interactif; i++) {
-
     if (mode_interactif) {
       AfficheInvite ();
       entree = stdin;
     }
     else {
       /* Si le mode n'est pas interractif (il y a des arguments sur la ligne
-       * de commande lors de l'appel au shell), alors il faut ouvrir les
-       * fichiers en argument, un � un (argv[i]), puis interpreter leur contenu
-       * dans la boucle suivante
-       */
+      * de commande lors de l'appel au shell), alors il faut ouvrir les
+      * fichiers en argument, un � un (argv[i]), puis interpreter leur contenu
+      * dans la boucle suivante
+      */
       entree = fopen(argv[i], "r");
     }
 
@@ -45,12 +43,12 @@ int main (int argc, char *argv[]) {
       execution_ligne_cmd(info);
 
       if (mode_interactif) {
-       AfficheInvite ();
-     }
-   }
+        AfficheInvite ();
+      }
+    }
 
-   mode_interactif = faux;
- }
+    mode_interactif = faux;
+  }
 
- return EXIT_SUCCESS;
+  return EXIT_SUCCESS;
 }

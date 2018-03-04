@@ -116,12 +116,12 @@ t_bool	ActionLS (parse_info *info, int debut, int nbArg) {
     }
     //Si on n'a pas pu ouvrir le répertoire, alors le deuxième argument est peut être autre chose qu'un chemin
     else {
-      ActionEXEC(info, debut, nbArg);
+      return ActionEXEC(info, debut, nbArg);
     }
   }
   else {
-    ActionEXEC(info, debut, nbArg);
+    return ActionEXEC(info, debut, nbArg);
   }
 
-  return faux;
+  return vrai;
 }
