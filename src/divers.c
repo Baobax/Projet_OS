@@ -8,7 +8,7 @@ void AfficheInvite() {
   size_t i;
   char * dwRet;
 
-  if (lire_variable ("INV", invite, sizeof (invite))) {
+  if(lire_variable ("INV", invite, sizeof (invite))) {
 
     /* Format reconnu :
     * \u : remplace par l'utilisateur
@@ -54,7 +54,7 @@ void AfficheInvite() {
         sprintf(var, "%c", invite[i]);
       }
 
-        strncat(chaine, var, CHAINE_MAX - strlen(chaine));
+      strncat(chaine, var, CHAINE_MAX - strlen(chaine));
     }
 
   }
@@ -68,41 +68,31 @@ void AfficheInvite() {
 }
 
 t_bool ecrire_variable (char* nomVar, char* valeur) { //setenv
-
-  // printf("Appel a ecrire_variable (%s %d) a ecrire avec \"%s\" et \"%s\". \n",
-  // __FILE__,
-  // __LINE__,
-  // nomVar,
-  // valeur);
-
-  setenv(nomVar,valeur,1);
+  if(nomVar != NULL) {
+    if(valeur != NULL) {
+      setenv(nomVar,valeur,1);
+    }
+    else {
+      setenv(nomVar,"",1);
+    }
+    return vrai;
+  }
 
   return faux;
 }
 
+//Pour tester une variable du système : "echo %LANGUAGE"
 t_bool lire_variable (char* nomVar, char* valeur, int taille) { //getenv
-
   strcpy(valeur, "");
 
-  // printf("Appel a lire_variable (%s %d) a ecrire avec \"%s\", \"%s\" et %d. \n",
-  // __FILE__,
-  // __LINE__,
-  // nomVar,
-  // valeur,
-  // taille);
-
-  if (nomVar != NULL){
-
+  if(nomVar != NULL && taille > 0){
     char *variable = getenv(nomVar);
     
     if (variable != NULL) {
       strcpy(valeur, variable);
+      return vrai;
     }
-
   }
-
-
-  (void) taille;
 
   return faux;
 }

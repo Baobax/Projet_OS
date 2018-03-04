@@ -28,7 +28,7 @@ t_bool	ActionEXEC (parse_info *info, int debut, int nbArg) {
 			printf("Impossible d'accéder en écriture\n");
 			return faux;
 		}
-		// Remplace la sortie standard dont le numero de descripteur est 1
+		//Remplace la sortie standard dont le numero de descripteur est 1
 		dup2(sortie, 1);
 	}
 	else if (! EST_EGAL(info->entree, "")) {
@@ -55,8 +55,8 @@ t_bool	ActionEXEC (parse_info *info, int debut, int nbArg) {
 			//Pourquoi waitpid ?
 			//Si on fait seulement wait et qu'on exécute "& gedit", qu'on le ferme et qu'on fait ensuite "gedit"
 			//la deuxième exécution se fait aussi en arrière plan car le wait récupère
-			//le code de retour du gedit précédent
-			//Il faut donc attendre le processus fils qu'on vient de créer
+			//le code de retour du gedit précédent.
+			//Il faut donc attendre le processus fils qu'on vient de créer avec waitpid.
 			waitpid(pid_fils, NULL, 0);
 		}
 	}

@@ -36,8 +36,6 @@ int main (int argc, char *argv[]) {
        * fichiers en argument, un � un (argv[i]), puis interpreter leur contenu
        * dans la boucle suivante
        */
-      (void) argv;
-
       entree = fopen(argv[i], "r");
     }
 

@@ -6,9 +6,9 @@ t_bool	ActionECHO (parse_info *info, int debut, int nbArg) {
   int i;
   FILE *sortie;
 
-  if (! EST_EGAL(info->sortie, "")) {
-    
+  if (!EST_EGAL(info->sortie, "")) {
     sortie=fopen(info->sortie,"w");
+
     if (sortie==NULL) {
       /* Traitement du cas où le fichier n’est pas accessible en écriture */
       printf("Impossible d'accéder en écriture\n");
@@ -37,22 +37,6 @@ t_bool	ActionECHO (parse_info *info, int debut, int nbArg) {
 }
 
 t_bool	ActionSET (parse_info *info, int debut, int nbArg) {
-
-  /* si l'appel est correctement ecrit, on a :
-   * arguments[0] == "set"
-   * arguments[1] == "nom_variable"
-   * arguments[2] == "="
-   * arguments[3] == "valeur"
-   * nbArg == 4
-   *
-   * ou
-   * arguments[0] == "set"
-   * arguments[1] == "nom_variable"
-   * arguments[2] == "="
-   * nbArg == 3
-   *
-   */
-
   if (!EST_EGAL(info->ligne_cmd[debut], "set") && !EST_EGAL(info->ligne_cmd[debut+2], "=")) {
     printf("Impossible de mettre a jour la variable, appel incorrect\n");
     return faux;
@@ -61,18 +45,15 @@ t_bool	ActionSET (parse_info *info, int debut, int nbArg) {
   if (nbArg == 4)	{
     return ecrire_variable (info->ligne_cmd[debut+1], info->ligne_cmd[debut+3]);
   }
-
   else if (nbArg == 3) {
     return ecrire_variable (info->ligne_cmd[debut+1], NULL);
   }
-
   else {
     return faux;
   }
 }
 
 t_bool ActionCD (parse_info *info, int debut, int nbArg) {
-
   char def[MAX_PATH];
   char dirName[MAX_PATH];
   int i;
@@ -84,36 +65,37 @@ t_bool ActionCD (parse_info *info, int debut, int nbArg) {
    * (le repertoire de destination contient des espaces)
    */
   if (nbArg == 1) {
-
     lire_variable ("USERPROFILE", def, sizeof (def));
+
     if (chdir (def) == -1) {
       printf ("Impossible de changer vers le repertoire '%s' \n", def );
       return faux;
     }
-  } else {
-
+  }
+  else {
     strcpy(dirName,"");
+
     for(i=1; i<nbArg; i++) {
       if(strlen(dirName)!=0) strcat(dirName," ");
       strcat(dirName, info->ligne_cmd[debut+i]);
     }
 
-    if (chdir (dirName) == -1) {
-      printf ("Impossible de changer vers le repertoire '%s'\n", dirName);
+    if (chdir(dirName) == -1) {
+      printf("Impossible de changer vers le repertoire '%s'\n", dirName);
       return faux;
     }
   }
-  return vrai;
 
+  return vrai;
 }
 
 
 t_bool	ActionLS (parse_info *info, int debut, int nbArg) {
-
   if(nbArg == 1) {
     struct dirent *lecture;
     DIR *repertoire;
     repertoire = opendir(".");
+
     if(repertoire != NULL) {
       while ((lecture = readdir(repertoire))) {
         printf("%s\n", lecture->d_name);
@@ -125,6 +107,7 @@ t_bool	ActionLS (parse_info *info, int debut, int nbArg) {
     struct dirent *lecture;
     DIR *repertoire;
     repertoire = opendir(info->ligne_cmd[debut + 1]);
+
     if(repertoire != NULL) {
       while ((lecture = readdir(repertoire))) {
         printf("%s\n", lecture->d_name);
@@ -139,10 +122,6 @@ t_bool	ActionLS (parse_info *info, int debut, int nbArg) {
   else {
     ActionEXEC(info, debut, nbArg);
   }
-
-  // printf("Appel a actionLS (%s %d) a ecrire.\n",
-	//  _FILE_,
-	//  _LINE_);
 
   return faux;
 }

@@ -7,10 +7,6 @@ void execution_ligne_cmd(parse_info *info) {
   int i, j, n, nb_arg, nb_args_total;
   int resultat;
 
-  // /* cet appel est a supprimer et n'est la que pour illustrer l'existence de la structure de donnees */
-  // printf("Appel a affiche_parse_info (%s %d) a supprimer\n", __FILE__, __LINE__);
-  // affiche_parse_info(info);
-
   i = 0;
   while (i<info->nb_arg) {
 
@@ -47,10 +43,6 @@ void execution_ligne_cmd(parse_info *info) {
       j++;
     }
 
-    // /* cet appel est a supprimer et n'est la que pour illustrer l'existence de la structure de donnees */
-    // printf("Appel a affiche_commande (%s %d) a supprimer\n", __FILE__, __LINE__);
-    // affiche_commande(info, i);
-    // printf("\n");
 
     if(info->modificateur[j]==TUBE) {
       /* il faut traiter (par simplification uniquement pour deux commandes)
@@ -132,7 +124,7 @@ t_bool execution_cmd(parse_info *info, int debut, int nb_arg)
   }
 }
 
-//Commande pour tester les tubes : "ls | sort"
+//Commande utile pour tester les tubes : "ls | sort"
 t_bool execution_cmd_tube(parse_info *info, int debut, int nb_args_cmd_1, int nb_args_total) {
   pid_t pid_fils;
   int tuyaux[2];
