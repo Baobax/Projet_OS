@@ -69,12 +69,6 @@ void AfficheInvite() {
 
 t_bool ecrire_variable (char* nomVar, char* valeur) { //setenv
 
-  // printf("Appel a ecrire_variable (%s %d) a ecrire avec \"%s\" et \"%s\". \n",
-  // __FILE__,
-  // __LINE__,
-  // nomVar,
-  // valeur);
-
   setenv(nomVar,valeur,1);
 
   return faux;
@@ -83,13 +77,6 @@ t_bool ecrire_variable (char* nomVar, char* valeur) { //setenv
 t_bool lire_variable (char* nomVar, char* valeur, int taille) { //getenv
 
   strcpy(valeur, "");
-
-  // printf("Appel a lire_variable (%s %d) a ecrire avec \"%s\", \"%s\" et %d. \n",
-  // __FILE__,
-  // __LINE__,
-  // nomVar,
-  // valeur,
-  // taille);
 
   if (nomVar != NULL){
 
